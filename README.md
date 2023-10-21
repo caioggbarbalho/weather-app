@@ -6,6 +6,7 @@ It's base was constructed with GreatStack video tutorial, but I plan to expand s
 
 ## To-do List
 
-* Load user data at start of app
+* Allow for ENTER in addition to click (DONE)
+* Load user data at start of app (DONE)
 * Add Style according to time of day
 * Add tooltips with suggestions for the climate
