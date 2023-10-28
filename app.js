@@ -7,8 +7,10 @@ const searchBox = document.querySelector('.search input');
 const searchBtn = document.querySelector('.search button');
 const weatherIcon = document.querySelector('.weather-icon');
 
+
+//Load System informations at start
 if ("geolocation" in navigator) {
-  // Do something with coordinates returned
+  //Do something with coordinates returned
   function processCoords(position) {
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
@@ -38,12 +40,11 @@ if ("geolocation" in navigator) {
       
   }
 
-  // Fetch Coordinates
+  //Fetch Coordinates
   navigator.geolocation.getCurrentPosition(processCoords);
-
-  
 }
 
+//Function for checking weather
 async function checkWeather(city) {
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
@@ -84,53 +85,26 @@ async function checkWeather(city) {
     document.querySelector('.error').style.display = 'none';
 
     //Adding time-variant style
-    //Pulling sunset and timezone data from api
-    const sunsetTime = new Date(data.sys.sunset * 1000); //convert to miliseconds
-    const timezoneOffset = data.timezone;
-    //const locationTimestamp = 0
-    
-    //Calculating current time at location
-    const currentTime = new Date();
-    const localTime = new Date(currentTime.getTime() + timezoneOffset);
+    //Pulling sunset and current time from api
+    const sunsetTime = data.sys.sunset; //UNIX timestamp
+    const currentTime = data.dt;
 
-    //console.logging values
-    console.log('Sunset Time:', sunsetTime)
-    console.log('Timezone offset:', timezoneOffset)
-    console.log('Current Time:', currentTime)
-    console.log('Local Time:', localTime)
+    console.log('Sunset Time:' + sunsetTime);
+    console.log('Current Time:' + currentTime);
 
-   /* console.log('Sunset Timestamp:', sunsetTime)
-    
-    const currentTimestamp = Math.floor(Date.now() / 1000); // Get the timestamp in seconds
-    console.log("Current Unix timestamp:", currentTimestamp);
+    const isDayTime = currentTime < sunsetTime;
 
-    function convertTimestamp(currentTimestamp, timezoneOffset){
-      const originalDate = new Date(currentTimestamp * 1000);
-
-      const adjustedDate = new Date(originalDate.getTime() + timezoneOffset * 1000);
-
-      const locationTimestamp = Math.floor(adjustedDate.getTime() / 1000);
-      
-      console.log('Location Timestamp:', locationTimestamp);
-      
-      return locationTimestamp;
-      
-    }
-
-    convertTimestamp(currentTimestamp, timezoneOffset);*/
-
-    //Comparing current time with sunset time
-    const isDayTime = currentTime < new Date(sunsetTime);
-
-    //Checking if isDayTine is true to apply style to background
+    //Checking if isDayTime is true to apply style to background
     if (isDayTime) {
       document.body.style.backgroundColor = 'lightblue';
     } else {
       document.body.style.backgroundColor = 'midnightblue';
     }
+
   }
 }
 
+//Event Listeners to search when click or keydown
 searchBtn.addEventListener('click', () => {
   checkWeather(searchBox.value);
 
