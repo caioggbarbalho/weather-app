@@ -59,7 +59,7 @@ async function checkWeather(city) {
     document.querySelector('.city').innerHTML = data.name;
     document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + '°C';
     document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
-    document.querySelector('.wind').innerHTML = data.wind.speed + ' Km/h';
+    document.querySelector('.wind').innerHTML = data.wind.speed + ' m/s';
 
     if (data.weather[0].main == 'Clouds'){
       weatherIcon.src = 'images/clouds.png';
