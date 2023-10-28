@@ -83,6 +83,31 @@ async function checkWeather(city) {
     document.querySelector('.weather').style.display = 'block';
     document.querySelector('.error').style.display = 'none';
 
+    //Adding time-variant style
+    //Pulling sunset and timezone data from api
+    const sunsetTime = data.sys.sunset; //convert to miliseconds
+    const timezoneOffset = data.timezone;
+
+    //Calculating current time at location
+    const currentTime = new Date();
+    const localTime = new Date(currentTime.getTime() + timezoneOffset);
+
+    //console.logging values
+    console.log('Sunset Time:', sunsetTime)
+    console.log('Timezone offset:', timezoneOffset)
+    console.log('Current Time:', currentTime)
+    console.log('Local Time:', localTime)
+    
+
+    //Comparing current time with sunset time
+    const isDayTime = currentTime < new Date(sunsetTime);
+
+    //Checking if isDayTine is true to apply style to background
+    if (isDayTime) {
+      document.body.style.backgroundColor = 'lightblue';
+    } else {
+      document.body.style.backgroundColor = 'midnightblue';
+    }
   }
 }
 
