@@ -86,11 +86,25 @@ async function checkWeather(city) {
 
     //Adding time-variant style
     //Pulling sunset and current time from api
-    const sunsetTime = data.sys.sunset; //UNIX timestamp
-    const currentTime = data.dt;
+    const sunsetTime = data.sys.sunset*1000; //UNIX timestamp
+    const currentTime = data.dt*1000;
+    const timezone = data.timezone;
 
     console.log('Sunset Time:' + sunsetTime);
     console.log('Current Time:' + currentTime);
+
+    //Transforming Unix timestamp into regular date
+    const currentDate = new Date(currentTime);
+    console.log('Current Date:' + currentDate);
+
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+
+    console.log('Current Hour:' + hours)
+    console.log('Current Minute:' + minutes)
+
+    document.querySelector('.time').innerHTML = hours + ':' + minutes.toLocaleString('en-US', {minimumIntegerDigits: 2}) + 'h';
+
 
     const isDayTime = currentTime < sunsetTime;
 
@@ -100,6 +114,7 @@ async function checkWeather(city) {
     } else {
       document.body.style.backgroundColor = 'midnightblue';
     }
+
 
   }
 }
