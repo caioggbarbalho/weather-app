@@ -85,9 +85,10 @@ async function checkWeather(city) {
 
     //Adding time-variant style
     //Pulling sunset and timezone data from api
-    const sunsetTime = data.sys.sunset; //convert to miliseconds
+    const sunsetTime = new Date(data.sys.sunset * 1000); //convert to miliseconds
     const timezoneOffset = data.timezone;
-
+    //const locationTimestamp = 0
+    
     //Calculating current time at location
     const currentTime = new Date();
     const localTime = new Date(currentTime.getTime() + timezoneOffset);
@@ -97,7 +98,26 @@ async function checkWeather(city) {
     console.log('Timezone offset:', timezoneOffset)
     console.log('Current Time:', currentTime)
     console.log('Local Time:', localTime)
+
+   /* console.log('Sunset Timestamp:', sunsetTime)
     
+    const currentTimestamp = Math.floor(Date.now() / 1000); // Get the timestamp in seconds
+    console.log("Current Unix timestamp:", currentTimestamp);
+
+    function convertTimestamp(currentTimestamp, timezoneOffset){
+      const originalDate = new Date(currentTimestamp * 1000);
+
+      const adjustedDate = new Date(originalDate.getTime() + timezoneOffset * 1000);
+
+      const locationTimestamp = Math.floor(adjustedDate.getTime() / 1000);
+      
+      console.log('Location Timestamp:', locationTimestamp);
+      
+      return locationTimestamp;
+      
+    }
+
+    convertTimestamp(currentTimestamp, timezoneOffset);*/
 
     //Comparing current time with sunset time
     const isDayTime = currentTime < new Date(sunsetTime);
