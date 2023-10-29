@@ -86,24 +86,31 @@ async function checkWeather(city) {
 
     //Adding time-variant style
     //Pulling sunset and current time from api
-    const sunsetTime = data.sys.sunset*1000; //UNIX timestamp
-    const currentTime = data.dt*1000;
-    const timezone = data.timezone;
+    const sunsetTime = data.sys.sunset; // UNIX timestamp
+    const currentTime = data.dt;
+    const offset = data.timezone; // Timezone offset in seconds
 
-    console.log('Sunset Time:' + sunsetTime);
-    console.log('Current Time:' + currentTime);
+    console.log('Sunset Time: ' + sunsetTime);
+    console.log('Current Time: ' + currentTime);
+    console.log('Offset: ' + offset);
 
-    //Transforming Unix timestamp into regular date
-    const currentDate = new Date(currentTime);
-    console.log('Current Date:' + currentDate);
+    // Use the offset to calculate the target time
+    const targetTime = new Date((currentTime + offset) * 1000); // Convert Unix timestamp to milliseconds
 
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
+    // Format the target time according to the offset
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'UTC',
+    };
 
-    console.log('Current Hour:' + hours)
-    console.log('Current Minute:' + minutes)
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedTargetTime = formatter.format(targetTime);
 
-    document.querySelector('.time').innerHTML = hours + ':' + minutes.toLocaleString('en-US', {minimumIntegerDigits: 2}) + 'h';
+    console.log('Formatted Target Time: ' + formattedTargetTime);
+
+    //change .time html to equal time on location
+    document.querySelector('.time').innerHTML = formattedTargetTime;
 
 
     const isDayTime = currentTime < sunsetTime;
@@ -114,8 +121,6 @@ async function checkWeather(city) {
     } else {
       document.body.style.backgroundColor = 'midnightblue';
     }
-
-
   }
 }
 
