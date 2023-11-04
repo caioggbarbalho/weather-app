@@ -116,10 +116,14 @@ async function checkWeather(city) {
     const isDayTime = currentTime < sunsetTime;
 
     //Checking if isDayTime is true to apply style to background
-    if (isDayTime) {
-      document.body.style.backgroundColor = 'lightblue';
+    let card = document.querySelector('.card');
+
+    if (!isDayTime) {
+      document.body.style.backgroundColor = 'rgb(60, 60, 60)';
+      card.classList.add('card-night')
     } else {
-      document.body.style.backgroundColor = 'midnightblue';
+      document.body.style.backgroundColor = 'rgb(200, 248, 255)';
+      card.classList.remove('card-night')
     }
   }
 }
