@@ -8,5 +8,6 @@ It's base was constructed with GreatStack video tutorial, but I plan to expand s
 
 * Allow for ENTER in addition to click (DONE)
 * Load user data at start of app (DONE)
-* Add Style according to time of day
+* Create clock with time of search location (DONE)
+* Add Style according to time of day (DONE)
 * Add tooltips with suggestions for the climate
