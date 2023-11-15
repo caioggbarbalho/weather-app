@@ -1,8 +1,8 @@
 # Weather App
 
-For now, this is just an exercise on Javascript and API's. 
+This is just an exercise on Javascript and API's. 
 
-It's base was constructed with GreatStack video tutorial, but I plan to expand some features and revamp it's design.
+It's base was constructed with GreatStack's youtube tutorial, but I plan to expand some features and revamp it's design.
 
 ## To-do List
 
